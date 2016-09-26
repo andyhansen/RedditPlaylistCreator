@@ -7,13 +7,18 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RedditPlaylistCreator.Services;
 
 namespace RedditPlaylistCreator
 {
     public class Startup
     {
+        private IHostingEnvironment _env;
+
         public Startup(IHostingEnvironment env)
         {
+            _env = env;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -29,6 +34,10 @@ namespace RedditPlaylistCreator
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddLogging();
+
+            services.AddTransient<RedditService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
