@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RedditPlaylistCreator.Services;
+using RedditPlaylistCreator.Models;
 
 namespace RedditPlaylistCreator.Controllers
 {
@@ -11,9 +13,13 @@ namespace RedditPlaylistCreator.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<Post>> Get()
         {
-            return new string[] { "value1", "value2" };
+
+            var service = new RedditService();
+            var result = await service.GetRedditPosts("youtubehaiku", Models.TimeScale.Day);
+
+            return result;
         }
 
         // GET api/values/5
