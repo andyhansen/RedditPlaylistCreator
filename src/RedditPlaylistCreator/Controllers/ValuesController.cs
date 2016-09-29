@@ -13,13 +13,15 @@ namespace RedditPlaylistCreator.Controllers
     {
         // GET api/values
         [HttpGet]
-        public async Task<IEnumerable<Post>> Get()
+        public async Task<IEnumerable<string>> Get()
         {
 
             var service = new RedditService();
             var result = await service.GetRedditPosts("youtubehaiku", Models.TimeScale.Day);
 
-            return result;
+            var youtubeids = service.GetYouTubeIdsFromPosts(result);
+
+            return youtubeids;
         }
 
         // GET api/values/5
