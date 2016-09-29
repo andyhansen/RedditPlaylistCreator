@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RedditPlaylistCreator.Services;
 
 namespace RedditPlaylistCreator
 {
@@ -31,6 +32,8 @@ namespace RedditPlaylistCreator
             services.AddMvc();
 
             services.AddLogging();
+
+            services.AddTransient<RedditService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +42,13 @@ namespace RedditPlaylistCreator
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
+            app.UseMvc(config => {
+                config.MapRoute(
+                    name: "Default",
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" }
+                    );
+            });
 
             app.UseStaticFiles();
         }
