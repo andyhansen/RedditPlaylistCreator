@@ -45,9 +45,8 @@ namespace RedditPlaylistCreator
             app.UseMvc(config => {
                 config.MapRoute(
                     name: "Default",
-                    template: "{controller}/{action}/{id?}",
-                    defaults: new { controller = "Home", action = "Index" }
-                    );
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
             });
 
             app.UseStaticFiles();

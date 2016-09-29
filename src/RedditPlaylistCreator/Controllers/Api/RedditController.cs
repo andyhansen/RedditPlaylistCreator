@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RedditPlaylistCreator.Services;
@@ -17,7 +15,7 @@ namespace RedditPlaylistCreator.Controllers
         {
 
             var service = new RedditService();
-            var result = await service.GetRedditPosts("youtubehaiku", Models.TimeScale.Day);
+            var result = await service.GetRedditPosts("youtubehaiku", TimeScale.Day);
 
             var youtubeids = service.GetYouTubeIdsFromPosts(result);
 
