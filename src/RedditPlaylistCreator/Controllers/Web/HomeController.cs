@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RedditPlaylistCreator.Models;
 using RedditPlaylistCreator.Services;
+using RedditPlaylistCreator.ViewModels.Home;
 using System.Threading.Tasks;
 
 namespace RedditPlaylistCreator.Controllers
@@ -16,12 +17,11 @@ namespace RedditPlaylistCreator.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var service = new RedditService();
-            var result = await service.GetRedditPosts("youtubehaiku", TimeScale.Day);
+            var result = await _redditService.GetRedditPosts("youtubehaiku", TimeScale.Day);
 
-            var youtubeids = service.GetYouTubeIdsFromPosts(result);
+            var youtubeids = _redditService.GetYouTubeIdsFromPosts(result);
 
-            return View();
+            return View(new YouTubeVideosViewModel(youtubeids));
         }
     }
 }

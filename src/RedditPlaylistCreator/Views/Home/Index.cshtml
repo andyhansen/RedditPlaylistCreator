@@ -1,10 +1,23 @@
-﻿@{
+﻿@model RedditPlaylistCreator.ViewModels.Home.YouTubeVideosViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div class="row">
     <div class="col-md-12">
         <h1>Welcome to the youtube thing</h1>
-        <p>This app will allow you to watch all the youtube haiku videos</p>
+        <div id="YouTubePlayer"></div>
     </div>
 </div>
+
+@section scripts {
+    <script src="http://www.youtube.com/iframe_api"></script>
+    <script src="~/js/youtube-player.js"></script>
+
+    <script>
+        function onYouTubeIframeAPIReady() {
+            var player = YouTubePlayer(YT);
+            player.init("YouTubePlayer", @(Model.JsonIds));
+        }
+    </script>
+}

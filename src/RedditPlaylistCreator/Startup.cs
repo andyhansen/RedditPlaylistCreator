@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -29,7 +30,11 @@ namespace RedditPlaylistCreator
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                if (_env.IsProduction())
+                    config.Filters.Add(new RequireHttpsAttribute());
+            });
 
             services.AddLogging();
 
@@ -42,14 +47,14 @@ namespace RedditPlaylistCreator
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseStaticFiles();
+
             app.UseMvc(config => {
                 config.MapRoute(
                     name: "Default",
                     template: "{controller=Home}/{action=Index}/{id?}"
                 );
             });
-
-            app.UseStaticFiles();
         }
     }
 }
