@@ -5,6 +5,7 @@
 
     function onPlayerReady(event) {
         event.target.loadVideoById(youtubeIds[index]);
+        event.target.pauseVideo();
     }
 
     function onPlayerStateChange(event) {
@@ -27,8 +28,6 @@
                     'onStateChange': onPlayerStateChange
                 }
             });
-
-
         }
     }
 
